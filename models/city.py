@@ -7,6 +7,7 @@ from models.amenity import Amenity, place_amenity
 from models.review import Review
 from models import storage
 
+
 class Place(BaseModel):
     """ Place class """
     __tablename__ = 'places'
@@ -22,9 +23,12 @@ class Place(BaseModel):
     longitude = Column(Float, nullable=True)
 
     amenities = relationship(
-        'Amenity', secondary=place_amenity, back_populates='place_amenities', viewonly=False)
+        'Amenity', secondary=place_amenity,
+        back_populates='place_amenities', viewonly=False)
 
-    reviews = relationship('Review', back_populates='place', cascade='all, delete-orphan')
+    reviews = relationship(
+            'Review', back_populates='place',
+            cascade='all, delete-orphan')
 
     if storage_type == 'file':
         @property
